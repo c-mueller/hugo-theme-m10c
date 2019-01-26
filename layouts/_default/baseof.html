@@ -13,7 +13,7 @@
   </head>
   <body>
     <header class="app-header">
-      <a href="/"><img class="app-header-avatar" src="./avatar.jpg" /></a>
+      <a href="/"><img class="app-header-avatar" src="{{ .Site.Params.avatarPath }}" /></a>
       <h1>{{ .Site.Title }}</h1>
       <p>{{ .Site.Params.description | default "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vehicula turpis sit amet elit pretium." }}</p>
       <div class="app-header-social">
@@ -21,11 +21,22 @@
           <a target="_blank" href="{{ .url }}">{{ partial "icon.html" .name }}</a>
         {{ end }}
       </div>
+      <ul>
+        {{ range .Site.Menus.main }}
+          <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+        {{ end }}
+      </ul>
     </header>
     <main class="app-container">
       {{ block "main" . }}
         {{ .Content }}
       {{ end }}
+      <div class="app-footer" style="bottom: 0px;">
+        {{ .Site.Params.copyright }}
+        {{ range .Site.Menus.footer }}
+          - <a href="{{ .URL }}">{{ .Name }}</a>
+        {{ end }}
+      </div>
     </main>
   </body>
 </html>
